@@ -1,0 +1,33 @@
+# docker-compose.yml
+version: '3.3'
+
+services:
+
+  db:
+    ports:
+      - 5432:5432
+    image: postgres:11
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    volumes:
+
+      - postgres_data:/var/lib/postgresql/data/
+
+  web:
+    build: .
+    restart: always
+    container_name: 'polls_api_web'
+    command: gunicorn polls_api.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/code
+    expose:
+      - 8000
+    depends_on:
+      - db
+    env_file:
+      - ./.env.dev
+
+volumes:
+
+  postgres_data:
