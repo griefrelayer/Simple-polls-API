@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.postgres.fields import JSONField
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
+'''for user in User.objects.all():
+    Token.objects.get_or_create(user=user)'''
 # Create your models here.
 
 
@@ -10,9 +14,13 @@ class Poll(models.Model):
     """
 
     name = models.CharField(max_length=150)
-    start_date = models.DateField(editable=False)
+    start_date = models.DateField()
     end_date = models.DateField()
     description = models.CharField(max_length=800)
+
+    class Meta:
+        verbose_name = "Опрос"
+        verbose_name_plural = "Опросы"
 
 
 class Question(models.Model):
@@ -23,13 +31,21 @@ class Question(models.Model):
     type = models.CharField(max_length=8)
     poll = models.ForeignKey(to=Poll, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name = "Вопрос"
+        verbose_name_plural = "Вопросы"
 
-class Answers(models.Model):
+
+class Answer(models.Model):
     """
-    Answers model
+    Answer model
     """
-    uuid = models.UUIDField(auto_created=True)
+    anonuser_id = models.IntegerField()
     answer = JSONField()
-    question = models.ForeignKey(to=Question, on_delete=models.CASCADE)
+    question = models.OneToOneField(to=Question, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Ответ"
+        verbose_name_plural = "Ответы"
 
 
