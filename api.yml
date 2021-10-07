@@ -1,0 +1,634 @@
+openapi: 3.0.3
+info:
+  title: Polls API
+  version: 1.0.0
+  description: Simple polls API for test activity
+paths:
+  /api/v1/polls/:
+    get:
+      operationId: api_v1_polls_list
+      description: |-
+        API endpoint that allows Poll objects creating, updating, deleting, listing and detail view.
+        For the admins, all actions are allowed, for others only list and detail view are allowed.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PollDefault'
+          description: ''
+    post:
+      operationId: api_v1_polls_create
+      description: |-
+        API endpoint that allows Poll objects creating, updating, deleting, listing and detail view.
+        For the admins, all actions are allowed, for others only list and detail view are allowed.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PollDefault'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PollDefault'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PollDefault'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PollDefault'
+          description: ''
+  /api/v1/polls/{id}/:
+    get:
+      operationId: api_v1_polls_retrieve
+      description: |-
+        API endpoint that allows Poll objects creating, updating, deleting, listing and detail view.
+        For the admins, all actions are allowed, for others only list and detail view are allowed.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Опрос.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PollDefault'
+          description: ''
+    put:
+      operationId: api_v1_polls_update
+      description: |-
+        API endpoint that allows Poll objects creating, updating, deleting, listing and detail view.
+        For the admins, all actions are allowed, for others only list and detail view are allowed.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Опрос.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PollDefault'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PollDefault'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PollDefault'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PollDefault'
+          description: ''
+    patch:
+      operationId: api_v1_polls_partial_update
+      description: |-
+        API endpoint that allows Poll objects creating, updating, deleting, listing and detail view.
+        For the admins, all actions are allowed, for others only list and detail view are allowed.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Опрос.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPollDefault'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPollDefault'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPollDefault'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PollDefault'
+          description: ''
+    delete:
+      operationId: api_v1_polls_destroy
+      description: |-
+        API endpoint that allows Poll objects creating, updating, deleting, listing and detail view.
+        For the admins, all actions are allowed, for others only list and detail view are allowed.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Опрос.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/polls/{polls_pk}/questions/:
+    get:
+      operationId: api_v1_polls_questions_list
+      description: |-
+        API endpoint that allows Question objects creating, updating, deleting, list and detail view.
+        Also it allows Answer object creation
+        For the admins, all actions are allowed, for others only list, detail view and answer are allowed.
+        answer action is allowing users to create answers
+      parameters:
+      - in: path
+        name: polls_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+          description: ''
+    post:
+      operationId: api_v1_polls_questions_create
+      description: |-
+        API endpoint that allows Question objects creating, updating, deleting, list and detail view.
+        Also it allows Answer object creation
+        For the admins, all actions are allowed, for others only list, detail view and answer are allowed.
+        answer action is allowing users to create answers
+      parameters:
+      - in: path
+        name: polls_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Question'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Question'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+  /api/v1/polls/{polls_pk}/questions/{id}/:
+    get:
+      operationId: api_v1_polls_questions_retrieve
+      description: |-
+        API endpoint that allows Question objects creating, updating, deleting, list and detail view.
+        Also it allows Answer object creation
+        For the admins, all actions are allowed, for others only list, detail view and answer are allowed.
+        answer action is allowing users to create answers
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Вопрос.
+        required: true
+      - in: path
+        name: polls_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+    put:
+      operationId: api_v1_polls_questions_update
+      description: |-
+        API endpoint that allows Question objects creating, updating, deleting, list and detail view.
+        Also it allows Answer object creation
+        For the admins, all actions are allowed, for others only list, detail view and answer are allowed.
+        answer action is allowing users to create answers
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Вопрос.
+        required: true
+      - in: path
+        name: polls_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Question'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Question'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+    patch:
+      operationId: api_v1_polls_questions_partial_update
+      description: |-
+        API endpoint that allows Question objects creating, updating, deleting, list and detail view.
+        Also it allows Answer object creation
+        For the admins, all actions are allowed, for others only list, detail view and answer are allowed.
+        answer action is allowing users to create answers
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Вопрос.
+        required: true
+      - in: path
+        name: polls_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedQuestion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedQuestion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedQuestion'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+    delete:
+      operationId: api_v1_polls_questions_destroy
+      description: |-
+        API endpoint that allows Question objects creating, updating, deleting, list and detail view.
+        Also it allows Answer object creation
+        For the admins, all actions are allowed, for others only list, detail view and answer are allowed.
+        answer action is allowing users to create answers
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Вопрос.
+        required: true
+      - in: path
+        name: polls_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/polls/{polls_pk}/questions/{id}/answer/:
+    post:
+      operationId: api_v1_polls_questions_answer_create
+      description: |-
+        API endpoint that allows Question objects creating, updating, deleting, list and detail view.
+        Also it allows Answer object creation
+        For the admins, all actions are allowed, for others only list, detail view and answer are allowed.
+        answer action is allowing users to create answers
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Вопрос.
+        required: true
+      - in: path
+        name: polls_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Question'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Question'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+  /api/v1/token-auth/:
+    post:
+      operationId: api_v1_token_auth_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
+  /api/v1/users/{id}/polls:
+    get:
+      operationId: api_v1_users_polls_retrieve
+      description: API endpoint that allows to view list of answered polls by provided
+        user_id
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PollDefault'
+          description: ''
+  /api/v1/users/{id}/polls/{pk2}:
+    get:
+      operationId: api_v1_users_polls_retrieve_2
+      description: API endpoint that allows to view list of answered questions in
+        the poll by provided poll_id and user_id
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: pk2
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Answer'
+          description: ''
+components:
+  schemas:
+    Answer:
+      type: object
+      description: This serializer serializes Answer object with all fields
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        anonuser_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        answer:
+          type: object
+          additionalProperties: {}
+        question:
+          type: integer
+      required:
+      - anonuser_id
+      - answer
+      - id
+      - question
+    AuthToken:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+          title: Имя пользователя
+        password:
+          type: string
+          writeOnly: true
+          title: Пароль
+        token:
+          type: string
+          readOnly: true
+          title: Токен
+      required:
+      - password
+      - token
+      - username
+    PatchedPollDefault:
+      type: object
+      description: This serializer serializes Poll object with all fields
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 150
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        description:
+          type: string
+          maxLength: 800
+    PatchedQuestion:
+      type: object
+      description: This serializer serializes Question object with all fields
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        text:
+          type: string
+          maxLength: 300
+        type:
+          type: string
+          maxLength: 8
+        poll:
+          type: integer
+    PollDefault:
+      type: object
+      description: This serializer serializes Poll object with all fields
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 150
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        description:
+          type: string
+          maxLength: 800
+      required:
+      - description
+      - end_date
+      - id
+      - name
+      - start_date
+    Question:
+      type: object
+      description: This serializer serializes Question object with all fields
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        text:
+          type: string
+          maxLength: 300
+        type:
+          type: string
+          maxLength: 8
+        poll:
+          type: integer
+      required:
+      - id
+      - poll
+      - text
+      - type
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
